@@ -1,0 +1,10 @@
+# .gitignore file
+
+# ignore folders
+drafts/**
+.VSCodeCounter/**
+
+# ignore files
+
+# ignore specified files
+Manifest.toml

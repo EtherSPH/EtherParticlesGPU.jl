@@ -1,0 +1,20 @@
+{
+    "autoHeader": {
+        "format": {
+            "startWith": "#=",
+            "middleWith": "",
+            "endWith": "=#",
+            "headerPrefix": "@",
+        },
+        "header": {
+            "author": "bcynuaa <bcynuaa@163.com>",
+            "date": {
+                "type": "createTime",
+                "format": "YYYY/MM/DD HH:mm:ss",
+            },
+            "license": "MIT",
+            "declaration": "`EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.",
+            "description": "",
+        }
+    },
+}
