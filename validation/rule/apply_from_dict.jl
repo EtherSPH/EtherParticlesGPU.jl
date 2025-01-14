@@ -21,11 +21,7 @@ end
     x[I] += y[I] * 3
 end
 
-const f_dict = Dict(
-    (1, 1) => f11!,
-    (1, 2) => f12!,
-    (2, 1) => f21!,
-)
+const f_dict = Dict((1, 1) => f11!, (1, 2) => f12!, (2, 1) => f21!)
 
 @kernel function device_apply_f!(x, y, f!)
     I = @index(Global)

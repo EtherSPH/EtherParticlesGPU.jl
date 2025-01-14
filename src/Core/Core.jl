@@ -20,13 +20,17 @@ include("Parallel.jl")
 export AbstractParallel
 export Parallel
 export synchronize
-export tohost
+export toDevice, toHost
 
 include("Domain/AbstractDomain.jl")
 export AbstractDomain
-export Dimain2D
+export Domain2D
 export indexCartesianToLinear, indexLinearToCartesian
-export insideDomain
+export inside
 export indexCartesianFromPosition, indexLinearFromPosition
+
+include("Parameter.jl")
+export AbstractParameter
+export AbstractParameter2D, AbstractParameter3D
 
 end

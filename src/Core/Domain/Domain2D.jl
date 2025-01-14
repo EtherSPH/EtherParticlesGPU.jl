@@ -104,7 +104,7 @@ end
     return i, j
 end
 
-@inline function insideDomain(
+@inline function inside(
     domain::AbstractDomain{IT, FT, Dimension2D},
     x::FT,
     y::FT,

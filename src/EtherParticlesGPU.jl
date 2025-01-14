@@ -24,5 +24,6 @@ module EtherParticlesGPU
 =#
 
 include("Core/Core.jl")
+using .Core
 
 end # module EtherParticlesGPU

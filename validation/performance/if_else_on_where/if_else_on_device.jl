@@ -42,8 +42,8 @@ end
 @kernel function device_apply_f!(abc, z)
     I = @index(Global)
     # f11!(I, 1, 3, abc, z)
-    for i = 1:3
-        for j = 1:3
+    for i in 1:3
+        for j in 1:3
             @inbounds L = abc[I, i]
             @inbounds R = abc[I, j]
             @match (L, R) begin

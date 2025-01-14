@@ -18,27 +18,27 @@ struct ABC
 end
 
 @inline function f11!(I, x, y, z)
-  z[I] += x[I] + y[I]
+    z[I] += x[I] + y[I]
 end
 
 @inline function f12!(I, x, y, z)
-  z[I] += x[I] + y[I] * 2
+    z[I] += x[I] + y[I] * 2
 end
 
 @inline function f13!(I, x, y, z)
-  z[I] += x[I] + y[I] * 3
+    z[I] += x[I] + y[I] * 3
 end
 
 @inline function f22!(I, x, y, z)
-  z[I] += x[I] + y[I] * 4
+    z[I] += x[I] + y[I] * 4
 end
 
 @inline function f23!(I, x, y, z)
-  z[I] += x[I] + y[I] * 5
+    z[I] += x[I] + y[I] * 5
 end
 
 @inline function f33!(I, x, y, z)
-  z[I] += x[I] + y[I] * 6
+    z[I] += x[I] + y[I] * 6
 end
 
 const f_dict = Dict(

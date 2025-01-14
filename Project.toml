@@ -6,8 +6,13 @@ version = "0.1.0"
 [deps]
 Atomix = "a9b6321e-bd34-4604-b9c9-b65b8de01458"
 KernelAbstractions = "63c18a36-062a-441e-b654-da1e3ab1ce7c"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+oneAPI = "8f75cd03-7ff8-4ecb-9b8f-daf728133b1b"
 
 [compat]
-julia = "^1.10"
 Atomix = "^1.0.1"
 KernelAbstractions = "^0.9.31"
+Pkg = "^1.0.0"
+Test = "^1.0.0"
+julia = "^1.10"

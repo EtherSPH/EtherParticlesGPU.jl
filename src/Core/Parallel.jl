@@ -66,7 +66,7 @@ end
     x::AT,
 ) where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, AT <: AbstractArray{<:Integer}}
     if CT === AT
-        if IT === AT
+        if IT === eltype(x)
             return x
         else
             return IT.(x)
@@ -80,7 +80,7 @@ end
     x::AT,
 ) where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, AT <: AbstractArray{<:AbstractFloat}}
     if CT === AT
-        if FT === AT
+        if FT === eltype(x)
             return x
         else
             return FT.(x)
@@ -97,14 +97,28 @@ end
     return nothing
 end
 
-@inline function tohost(
+@inline function toDevice(
+    parallel::AbstractParallel{IT, FT, CT, Backend},
+    x::Array,
+)::CT where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
+    return parallel(x)
+end
+
+@inline function toDevice(
+    ::AbstractParallel{IT, FT, Array, kCPUBackend},
+    x::Array,
+)::Array where {IT <: Integer, FT <: AbstractFloat}
+    return deepcopy(x)
+end
+
+@inline function toHost(
     ::AbstractParallel{IT, FT, CT, Backend},
     x::CT,
 )::Array where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
     return Array(x)
 end
 
-@inline function tohost(
+@inline function toHost(
     ::AbstractParallel{IT, FT, Array, kCPUBackend},
     x::Array,
 )::Array where {IT <: Integer, FT <: AbstractFloat}
