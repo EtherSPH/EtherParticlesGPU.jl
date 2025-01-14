@@ -1,12 +1,15 @@
 #=
   @ author: bcynuaa <bcynuaa@163.com>
-  @ date: 2025/01/14 01:00:08
+  @ date: 2025/01/14 14:52:54
   @ license: MIT
+  @ language: Julia
   @ declaration: `EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.
   @ description:
  =#
 
 abstract type AbstractParallel{IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend} end
+
+const kCPUBackend = CPU()
 
 function Base.show(
     io::IO,
@@ -20,7 +23,7 @@ function Base.show(
     return println(io, ")")
 end
 
-struct StandardParallel{IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend} <:
+struct Parallel{IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend} <:
        AbstractParallel{IT, FT, CT, Backend} end
 
 @inline function IntType(
@@ -87,16 +90,23 @@ end
     end
 end
 
-@inline function KernelAbstractions.synchronize(
+@inline function synchronize(
     ::AbstractParallel{IT, FT, CT, Backend},
 )::Nothing where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
     KernelAbstractions.synchronize(Backend)
     return nothing
 end
 
-@inline function synchronize(
+@inline function tohost(
     ::AbstractParallel{IT, FT, CT, Backend},
-)::Nothing where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
-    KernelAbstractions.synchronize(Backend)
-    return nothing
+    x::CT,
+)::Array where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
+    return Array(x)
+end
+
+@inline function tohost(
+    ::AbstractParallel{IT, FT, Array, kCPUBackend},
+    x::Array,
+)::Array where {IT <: Integer, FT <: AbstractFloat}
+    return deepcopy(x)
 end

@@ -13,6 +13,7 @@
                 "format": "YYYY/MM/DD HH:mm:ss",
             },
             "license": "MIT",
+            "language": "Julia",
             "declaration": "`EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.",
             "description": "",
         }
