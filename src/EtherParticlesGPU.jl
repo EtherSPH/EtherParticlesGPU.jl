@@ -12,7 +12,7 @@ module EtherParticlesGPU
 #=
   name rule:
   1. variable name: some_variable
-  2. variable in type: some_variable_
+  2. variable in struct: some_variable_
   3. function name: someFunctuion, someFunction!
   4. function to attain variable: get_some_variable_function
   5. type name: SomeType
@@ -21,6 +21,7 @@ module EtherParticlesGPU
   8. module name: SomeModule
   9. macro name: @some_macro
   10. file name: SomeFile.jl
+  11. file name not in src: some_file.jl
 =#
 
 include("Core/Core.jl")

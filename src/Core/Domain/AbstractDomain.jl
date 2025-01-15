@@ -99,5 +99,24 @@ end
     return domain.gap_y_inv_
 end
 
+function Base.show(io::IO, domain::AbstractDomain{IT, FT, Dimension2D}) where {IT <: Integer, FT <: AbstractFloat}
+    println(io, "Domain2D{$IT, $FT}(")
+    println(io, "    gap: ", get_gap(domain))
+    println(io, "    n_x: ", get_n_x(domain))
+    println(io, "    n_y: ", get_n_y(domain))
+    println(io, "    n: ", get_n(domain))
+    println(io, "    first_x: ", get_first_x(domain))
+    println(io, "    last_x: ", get_last_x(domain))
+    println(io, "    first_y: ", get_first_y(domain))
+    println(io, "    last_y: ", get_last_y(domain))
+    println(io, "    span_x: ", get_span_x(domain))
+    println(io, "    span_y: ", get_span_y(domain))
+    println(io, "    gap_x: ", get_gap_x(domain))
+    println(io, "    gap_y: ", get_gap_y(domain))
+    println(io, "    gap_x_inv: ", get_gap_x_inv(domain))
+    println(io, "    gap_y_inv: ", get_gap_y_inv(domain))
+    return println(io, ")")
+end
+
 include("Domain2D.jl")
 # TODO: Domain3D.jl

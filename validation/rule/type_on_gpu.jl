@@ -7,7 +7,7 @@
   @ description: # * Type parsing on GPU is allowed.
  =#
 
-include("../one_api_head.jl")
+include("../oneapi_head.jl")
 
 abstract type AbstractDimension{N} end
 

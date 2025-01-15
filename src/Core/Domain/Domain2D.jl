@@ -67,25 +67,6 @@ end
     return Domain2D{IT, FT}(1, 0, 0, 1, 1)
 end
 
-function Base.show(io::IO, domain::Domain2D{IT, FT}) where {IT <: Integer, FT <: AbstractFloat}
-    println(io, "Domain2D{$IT, $FT}(")
-    println(io, "    gap: ", domain.gap_)
-    println(io, "    n_x: ", domain.n_x_)
-    println(io, "    n_y: ", domain.n_y_)
-    println(io, "    n: ", domain.n_)
-    println(io, "    first_x: ", domain.first_x_)
-    println(io, "    last_x: ", domain.last_x_)
-    println(io, "    first_y: ", domain.first_y_)
-    println(io, "    last_y: ", domain.last_y_)
-    println(io, "    span_x: ", domain.span_x_)
-    println(io, "    span_y: ", domain.span_y_)
-    println(io, "    gap_x: ", domain.gap_x_)
-    println(io, "    gap_y: ", domain.gap_y_)
-    println(io, "    gap_x_inv: ", domain.gap_x_inv_)
-    println(io, "    gap_y_inv: ", domain.gap_y_inv_)
-    return println(io, ")")
-end
-
 @inline function indexCartesianToLinear(
     domain::AbstractDomain{IT, FT, Dimension2D},
     i::IT,
