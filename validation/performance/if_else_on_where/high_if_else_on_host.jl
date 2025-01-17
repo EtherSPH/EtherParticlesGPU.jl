@@ -19,37 +19,37 @@ struct ABC
 end
 
 @inline function f11!(I, x, y, z)
-    for _ = 1:n_loops_inner
+    for _ in 1:n_loops_inner
         z[I] += x[I] + y[I]
     end
 end
 
 @inline function f12!(I, x, y, z)
-    for _ = 1:n_loops_inner
+    for _ in 1:n_loops_inner
         z[I] += x[I] + y[I] * 2
     end
 end
 
 @inline function f13!(I, x, y, z)
-    for _ = 1:n_loops_inner
+    for _ in 1:n_loops_inner
         z[I] += x[I] + y[I] * 3
     end
 end
 
 @inline function f22!(I, x, y, z)
-    for _ = 1:n_loops_inner
+    for _ in 1:n_loops_inner
         z[I] += x[I] + y[I] * 4
     end
 end
 
 @inline function f23!(I, x, y, z)
-    for _ = 1:n_loops_inner
+    for _ in 1:n_loops_inner
         z[I] += x[I] + y[I] * 5
     end
 end
 
 @inline function f33!(I, x, y, z)
-    for _ = 1:n_loops_inner
+    for _ in 1:n_loops_inner
         z[I] += x[I] + y[I] * 6
     end
 end

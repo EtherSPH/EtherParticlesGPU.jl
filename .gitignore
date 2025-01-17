@@ -3,8 +3,10 @@
 # ignore folders
 drafts/**
 .VSCodeCounter/**
+.stfolder/**
 
 # ignore files
 
 # ignore specified files
 Manifest.toml
+.stignore
