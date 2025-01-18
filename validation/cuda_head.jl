@@ -11,7 +11,7 @@ using KernelAbstractions
 using CUDA
 using Random
 
-const IT = Int64
+const IT = Int32
 const FT = Float32
 const CT = CUDA.CuArray
 const Backend = CUDA.CUDABackend()

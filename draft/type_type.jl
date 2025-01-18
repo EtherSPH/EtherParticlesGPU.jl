@@ -21,7 +21,7 @@ end
 
 # struct Domain2D{IT <: Integer, FT <: AbstractFloat} <: AbstractDomain{IT, FT, Dimension2D} end
 
-# const domain_2d = Domain2D{Int64, Float64}()
+# const domain_2d = Domain2D{Int32, Float64}()
 
 # @inline function dimension(
 #     ::AbstractDomain{IT, FT, Dimension},

@@ -21,6 +21,12 @@ end
     return domain.gap_
 end
 
+@inline function get_gap_square(
+    domain::AbstractDomain{IT, FT, Dimension},
+)::FT where {IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension}
+    return domain.gap_square_
+end
+
 @inline function get_n_x(
     domain::AbstractDomain{IT, FT, Dimension},
 )::IT where {IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension}

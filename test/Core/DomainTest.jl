@@ -8,14 +8,18 @@
  =#
 
 @testset "Domain" begin
+    IT = Int32
+    FT = Float32
     x_0 = -1.0
     y_0 = -2.0
     x_1 = 3.0
     y_1 = 3.0
     gap = 0.15
-    domain_2d = EtherParticlesGPU.Domain2D{Int64, Float32}(gap, x_0, y_0, x_1, y_1)
+    domain_2d = EtherParticlesGPU.Domain2D{IT, FT}(gap, x_0, y_0, x_1, y_1)
 
     @test EtherParticlesGPU.dimension(domain_2d) == 2
+    @test EtherParticlesGPU.Core.get_gap(domain_2d) ≈ gap
+    @test EtherParticlesGPU.Core.get_gap_square(domain_2d) ≈ gap * gap
     @test EtherParticlesGPU.Core.get_n_x(domain_2d) == 27
     @test EtherParticlesGPU.Core.get_n_y(domain_2d) == 34
     @test EtherParticlesGPU.Core.get_n(domain_2d) == 27 * 34
@@ -30,8 +34,8 @@
     @test EtherParticlesGPU.Core.get_gap_x_inv(domain_2d) ≈ 1 / EtherParticlesGPU.Core.get_gap_x(domain_2d)
     @test EtherParticlesGPU.Core.get_gap_y_inv(domain_2d) ≈ 1 / EtherParticlesGPU.Core.get_gap_y(domain_2d)
 
-    @test EtherParticlesGPU.indexCartesianToLinear(domain_2d, 2, 3) == 2 + (3 - 1) * 27
-    @test EtherParticlesGPU.indexLinearToCartesian(domain_2d, 2 + (3 - 1) * 27) == (2, 3)
+    @test EtherParticlesGPU.indexCartesianToLinear(domain_2d, IT(2), IT(3)) == 2 + (3 - 1) * 27
+    @test EtherParticlesGPU.indexLinearToCartesian(domain_2d, IT(2 + (3 - 1) * 27)) == (2, 3)
     @test EtherParticlesGPU.inside(domain_2d, 1.5f0, 0.3f0) == true
     @test EtherParticlesGPU.indexCartesianFromPosition(domain_2d, 1.5f0, 0.3f0) == (17, 16)
     @test EtherParticlesGPU.indexLinearFromPosition(domain_2d, 1.5f0, 0.3f0) == 17 + (16 - 1) * 27

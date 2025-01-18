@@ -75,7 +75,7 @@ function host_apply_f!(x, y, z, f!)
     device_apply_f!(Backend, n_threads)(x, y, z, f!, ndrange = (length(z),))
 end
 
-function host_apply_f!(abc::ABC{CT}, z, f_dict::Dict{Tuple{Int64, Int64}, Function})
+function host_apply_f!(abc::ABC{CT}, z, f_dict::Dict{Tuple{Int32, Int32}, Function})
     for key in keys(f_dict)
         i, j = key
         host_apply_f!(abc.as[i], abc.as[j], z, f_dict[key])

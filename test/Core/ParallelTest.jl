@@ -9,7 +9,7 @@
 
 @testset "Parallel" begin
     @testset "CPU" begin
-        IT = Int64
+        IT = Int32
         FT = Float32
         CT = Array
         Backend = KernelAbstractions.CPU()
@@ -30,7 +30,7 @@
         using Pkg
         Pkg.add("oneAPI")
         using oneAPI
-        IT = Int64
+        IT = Int32
         FT = Float32
         CT = oneAPI.oneArray
         Backend = oneAPI.oneAPIBackend()

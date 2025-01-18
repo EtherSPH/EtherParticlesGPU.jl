@@ -4,7 +4,9 @@
   @ license: MIT
   @ language: Julia
   @ declaration: `EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.
-  @ description:
+  @ description: per pair and per particle's performance is almost the same... 
+      however, per pair need atomic operation, which adds instability.
+      I still prefer per particle wise operation.
  =#
 
 const kMaxNeighbourCount = 50

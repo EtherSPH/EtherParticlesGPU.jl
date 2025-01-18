@@ -9,6 +9,7 @@
 
 struct Domain2D{IT <: Integer, FT <: AbstractFloat} <: AbstractDomain{IT, FT, Dimension2D}
     gap_::FT
+    gap_square_::FT
     n_x_::IT
     n_y_::IT
     n_::IT
@@ -32,6 +33,7 @@ function Domain2D{IT, FT}(
     last_y::Real,
 )::Domain2D{IT, FT} where {IT <: Integer, FT <: AbstractFloat}
     gap = FT(gap)
+    gap_square = gap * gap
     first_x = FT(first_x)
     first_y = FT(first_y)
     last_x = FT(last_x)
@@ -47,6 +49,7 @@ function Domain2D{IT, FT}(
     gap_y_inv = 1 / gap_y
     return Domain2D{IT, FT}(
         gap,
+        gap_square,
         n_x,
         n_y,
         n,

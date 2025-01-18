@@ -4,10 +4,10 @@
   @ license: MIT
   @ language: Julia
   @ declaration: `EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.
-  @ description:
+  @ description: # ! 0.002318 seconds (1.57 k allocations: 41.094 KiB) on 4090
  =#
 
-include("../../oneapi_head.jl")
+include("../../cuda_head.jl")
 include("shared.jl")
 
 using MLStyle
@@ -161,6 +161,19 @@ end
     end
 end
 
+@inline function host_findneighbours!(particles::Particles)
+    KernelAbstractions.fill!(particles.neighbour_count, IT(0))
+    device_findneighbours!(Backend, kThreadNumber)(
+        particles.n_particles,
+        particles.positions,
+        particles.neighbour_count,
+        particles.neighbour_index,
+        particles.neighbour_relative_positions,
+        ndrange = (kParticleNumber,),
+    )
+    KernelAbstractions.synchronize(Backend)
+end
+
 @kernel function device_action!(
     tags,
     accumulated_positions,
@@ -242,19 +255,6 @@ end
         end
         NJ += 1
     end
-end
-
-@inline function host_findneighbours!(particles::Particles)
-    KernelAbstractions.fill!(particles.neighbour_count, IT(0))
-    device_findneighbours!(Backend, kThreadNumber)(
-        particles.n_particles,
-        particles.positions,
-        particles.neighbour_count,
-        particles.neighbour_index,
-        particles.neighbour_relative_positions,
-        ndrange = (kParticleNumber,),
-    )
-    KernelAbstractions.synchronize(Backend)
 end
 
 @inline function host_action!(particles::Particles)

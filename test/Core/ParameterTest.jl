@@ -8,7 +8,7 @@
  =#
 
 @testset "Parameter" begin
-    IT = Int64
+    IT = Int32
     FT = Float32
     @kwdef struct Parameter2D <: EtherParticlesGPU.AbstractParameter2D{IT, FT}
         density::FT = 1.0 |> FT
