@@ -6,6 +6,7 @@ drafts/**
 .stfolder/**
 
 # ignore files
+**.exe
 
 # ignore specified files
 Manifest.toml

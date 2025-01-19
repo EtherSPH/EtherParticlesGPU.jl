@@ -27,15 +27,13 @@ ordered_index = ordered_index |> CT
 
 function device_vadd!(a, b, c, index)
     I = threadIdx().x + (blockIdx().x - 1) * blockDim().x
-    STRIDE = blockDim().x * gridDim().x
-    while I <= n
+    if I <= n
         @inbounds J = index[I]
         step = 1
         while step <= kInnerLoop
             @inbounds c[I] += a[J] + b[J]
             step += 1
         end
-        I += STRIDE
     end
     return
 end
