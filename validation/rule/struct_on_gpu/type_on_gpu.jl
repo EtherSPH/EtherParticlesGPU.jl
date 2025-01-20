@@ -5,9 +5,10 @@
   @ language: Julia
   @ declaration: `EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.
   @ description: # * Type parsing on GPU is allowed.
+            # ! on Intel UHD Graphics 620 @ 1.15 GHz [Integrated]
  =#
 
-include("../oneapi_head.jl")
+include("../../oneapi_head.jl")
 
 abstract type AbstractDimension{N} end
 

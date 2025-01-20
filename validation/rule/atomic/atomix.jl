@@ -7,7 +7,7 @@
   @ description: # ! important: `oneAPI.jl` currently only supports atomic operations for `Int32` types.
  =#
 
-include("../oneapi_head.jl")
+include("../../oneapi_head.jl")
 
 using Atomix
 
