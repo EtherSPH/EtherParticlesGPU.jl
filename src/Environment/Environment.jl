@@ -7,14 +7,13 @@
   @ description:
  =#
 
-module Core
+module Environment
 
 using KernelAbstractions
 
 include("Dimension.jl")
 export AbstractDimension
 export Dimension1D, Dimension2D, Dimension3D
-export dimension
 
 include("Parallel.jl")
 export AbstractParallel
@@ -28,9 +27,6 @@ export Domain2D
 export indexCartesianToLinear, indexLinearToCartesian
 export inside
 export indexCartesianFromPosition, indexLinearFromPosition
-
-include("Parameter.jl")
-export AbstractParameter
-export AbstractParameter2D, AbstractParameter3D
+export get_n, get_n_x, get_n_y
 
 end

@@ -24,7 +24,10 @@ module EtherParticlesGPU
   11. file name not in src: some_file.jl
 =#
 
-include("Core/Core.jl")
-using .Core
+include("Environment/Environment.jl")
+using EtherParticlesGPU.Environment
+include("Components/Components.jl")
+using EtherParticlesGPU.Components
+include("Class/Class.jl")
 
 end # module EtherParticlesGPU

@@ -14,10 +14,10 @@
         CT = Array
         Backend = KernelAbstractions.CPU()
         parallel = EtherParticlesGPU.Parallel{IT, FT, CT, Backend}()
-        @test EtherParticlesGPU.Core.IntType(parallel) == IT
-        @test EtherParticlesGPU.Core.FloatType(parallel) == FT
-        @test EtherParticlesGPU.Core.ContainerType(parallel) == CT
-        @test EtherParticlesGPU.Core.getBackend(parallel) == Backend
+        @test EtherParticlesGPU.Environment.IntType(parallel) == IT
+        @test EtherParticlesGPU.Environment.FloatType(parallel) == FT
+        @test EtherParticlesGPU.Environment.ContainerType(parallel) == CT
+        @test EtherParticlesGPU.Environment.getBackend(parallel) == Backend
         @test parallel(UInt8(1)) == 1
         @test parallel(1.0) ≈ 1.0f0
         @test parallel(Int32.(1:3)) == [1, 2, 3]
@@ -35,10 +35,10 @@
         CT = oneAPI.oneArray
         Backend = oneAPI.oneAPIBackend()
         parallel = EtherParticlesGPU.Parallel{IT, FT, CT, Backend}()
-        @test EtherParticlesGPU.Core.IntType(parallel) == IT
-        @test EtherParticlesGPU.Core.FloatType(parallel) == FT
-        @test EtherParticlesGPU.Core.ContainerType(parallel) == CT
-        @test EtherParticlesGPU.Core.getBackend(parallel) == Backend
+        @test EtherParticlesGPU.Environment.IntType(parallel) == IT
+        @test EtherParticlesGPU.Environment.FloatType(parallel) == FT
+        @test EtherParticlesGPU.Environment.ContainerType(parallel) == CT
+        @test EtherParticlesGPU.Environment.getBackend(parallel) == Backend
         @test parallel(UInt8(1)) == 1
         @test parallel(1.0) ≈ 1.0f0
         @test parallel(Int32.(1:3)) |> Array == [1, 2, 3]

@@ -8,7 +8,7 @@
  =#
 
 @testset "Dimension" begin
-    @test EtherParticlesGPU.dimension(EtherParticlesGPU.Dimension1D) == 1
-    @test EtherParticlesGPU.dimension(EtherParticlesGPU.Dimension2D) == 2
-    @test EtherParticlesGPU.dimension(EtherParticlesGPU.Dimension3D) == 3
+    @test EtherParticlesGPU.Environment.dimension(EtherParticlesGPU.Dimension1D) == 1
+    @test EtherParticlesGPU.Environment.dimension(EtherParticlesGPU.Dimension2D) == 2
+    @test EtherParticlesGPU.Environment.dimension(EtherParticlesGPU.Dimension3D) == 3
 end

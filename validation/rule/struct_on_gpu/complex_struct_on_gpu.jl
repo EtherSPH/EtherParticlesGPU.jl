@@ -27,22 +27,42 @@ end
 const parameters_2d = Params{IT, FT, 2}(1.0, 2.0, 0.0, 4)
 const parameters_3d = Params{IT, FT, 3}(1.0, 2.0, 3.0, 4)
 
-@inline function index_add!(I, J, a, b, parameters::AbstractParameters{IT, FT, 2}) where {IT <: Integer, FT <: AbstractFloat}
+@inline function index_add!(
+    I,
+    J,
+    a,
+    b,
+    parameters::AbstractParameters{IT, FT, 2},
+) where {IT <: Integer, FT <: AbstractFloat}
     a[I] += b[J] * 2
     return a[I]
 end
 
-@inline function index_add!(I, J, a, b, parameters::AbstractParameters{IT, FT, 3}) where {IT <: Integer, FT <: AbstractFloat}
+@inline function index_add!(
+    I,
+    J,
+    a,
+    b,
+    parameters::AbstractParameters{IT, FT, 3},
+) where {IT <: Integer, FT <: AbstractFloat}
     a[I] += b[J] * 3
     return a[I]
 end
 
-@kernel function device_index_add!(a, @Const(b), parameters::AbstractParameters{IT, FT, N}) where {IT <: Integer, FT <: AbstractFloat, N}
+@kernel function device_index_add!(
+    a,
+    @Const(b),
+    parameters::AbstractParameters{IT, FT, N},
+) where {IT <: Integer, FT <: AbstractFloat, N}
     I = @index(Global)
     index_add!(I, I, a, b, parameters)
 end
 
-@inline function host_index_add!(a, b, parameters::AbstractParameters{IT, FT, N}) where {IT <: Integer, FT <: AbstractFloat, N}
+@inline function host_index_add!(
+    a,
+    b,
+    parameters::AbstractParameters{IT, FT, N},
+) where {IT <: Integer, FT <: AbstractFloat, N}
     device_index_add!(Backend, 2)(a, b, parameters, ndrange = (2,))
     KernelAbstractions.synchronize(Backend)
 end

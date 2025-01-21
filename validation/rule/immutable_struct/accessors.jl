@@ -37,8 +37,7 @@ sim = step(sim)
 const N = 10^8
 @info "Benchmarking step(sim) for $N times requires:"
 @time begin
-    for _ in 1:10^8
-        global
-        sim = step(sim)
+    for _ in 1:(10^8)
+        global sim = step(sim)
     end
 end

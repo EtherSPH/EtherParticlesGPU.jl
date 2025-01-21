@@ -21,5 +21,5 @@
     @test parameter_2d.sound_speed ≈ 2.0f0
     @test parameter_2d.viscosity ≈ 3.0f0
     @test parameter_2d.gamma == 7
-    @test EtherParticlesGPU.dimension(parameter_2d) == 2
+    @test EtherParticlesGPU.Components.dimension(parameter_2d) == 2
 end
