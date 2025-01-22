@@ -16,5 +16,6 @@ const kDefaultThreadNumber = 256
 const kDefaultMaxNeighbourNumber = 50
 
 include("NeighbourSystem/NeighbourSystem.jl")
+include("ParticleSystem/ParticleSystem.jl")
 
 end
