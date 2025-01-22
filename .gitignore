@@ -1,7 +1,7 @@
 # .gitignore file
 
 # ignore folders
-drafts/**
+draft/**
 .VSCodeCounter/**
 .stfolder/**
 

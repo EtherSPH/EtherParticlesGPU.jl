@@ -7,13 +7,7 @@
   @ description:
  =#
 
-abstract type AbstractParameter{IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension} end
-
-@inline function dimension(
-    ::AbstractParameter{IT, FT, Dimension},
-) where {IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension}
-    return IT(Environment.dimension(Dimension))
-end
-
-abstract type AbstractParameter2D{IT <: Integer, FT <: AbstractFloat} <: AbstractParameter{IT, FT, Dimension2D} end
-abstract type AbstractParameter3D{IT <: Integer, FT <: AbstractFloat} <: AbstractParameter{IT, FT, Dimension3D} end
+# AbstractParameter does not necessarily need to have `Dimension` type parameter.
+# so I just simply remove it.
+# Intger type and Float type are still kept.
+abstract type AbstractParameter{IT <: Integer, FT <: AbstractFloat} end

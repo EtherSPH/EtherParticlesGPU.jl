@@ -7,39 +7,21 @@
   @ description:
  =#
 
-"""
-    AbstractNeighbourSystem{IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension}
-    should bascially have fields:
-        - `contained_particle_index_count_::AbstractArray{IT, 1}` (n_cells, )
-        - `contained_particle_index_list_::AbstractArray{IT, 2}` (n_cells, n_particles)
-        - `neighbour_cell_index_count_::AbstractArray{IT, 1}` (n_cells, )
-        - `neighbour_cell_index_list_::AbstractArray{IT, 2}` (n_cells, n_neighbours)
-"""
-abstract type AbstractNeighbourSystem{IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension} end
-
-@inline function clean!(
-    neighbour_system::AbstractNeighbourSystem{IT, FT, Dimension},
-)::Nothing where {IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension}
-    KernelAbstractions.fill!(neighbour_system.contained_particle_index_count_, 0)
-    return nothing
+@inline function neighbourCellCount(dim::Intger)::typeof(dim)
+    return 3^dim # 9 for 2D, 27 for 3D
 end
 
-@inline function generateBasicNeighbourSystemProperties(
-    parallel::AbstractParallel{IT, FT, CT, Backend},
-    domain::AbstractDomain{IT, FT, Dimension};
-    max_neighbour_number::Integer = kDefaultMaxNeighbourNumber,
-)::Tuple where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, Dimension <: AbstractDimension}
-    n_cells = get_n(domain)
-    contained_particle_index_count = parallel(zeros(IT, n_cells))
-    contained_particle_index_list = parallel(zeros(IT, n_cells, max_neighbour_number))
-    neighbour_cell_index_count = parallel(zeros(IT, n_cells))
-    max_neighbour_cell_number = IT(3^Dimension) # 9 for 2D, 27 for 3D
-    neighbour_cell_index_list = parallel(zeros(IT, n_cells, max_neighbour_cell_number))
-    return n_cells,
-    contained_particle_index_count,
-    contained_particle_index_list,
-    neighbour_cell_index_count,
-    neighbour_cell_index_list
+include("NeighbourSystemBase.jl")
+
+# Dimension infomation is not necessary for neighbour system, so i just remove it.
+# each neighbour system should have a field called `base_` to store the basic properties.
+abstract type AbstractNeighbourSystem{IT <: Integer, FT <: AbstractFloat} end
+
+@inline function clean!(
+    neighbour_system::AbstractNeighbourSystem{IT, FT},
+)::Nothing where {IT <: Integer, FT <: AbstractFloat}
+    KernelAbstractions.fill!(neighbour_system.base_.contained_particle_index_count_, IT(0))
+    return nothing
 end
 
 @kernel function device_buildNeighbourSystem!(
@@ -48,12 +30,12 @@ end
     neighbour_cell_index_list,
 ) where {IT <: Integer, FT <: AbstractFloat}
     I = KernelAbstractions.@index(Global)
-    i, j = indexLinearToCartesian(I, domain.n_cells)
-    n_x = get_n_x(domain)
-    n_y = get_n_y(domain)
+    i, j = Environment.indexLinearToCartesian(domain, I)
+    n_x = Environment.get_n_x(domain)
+    n_y = Environment.get_n_y(domain)
     for di in -1:1
+        ii = i + di
         for dj in -1:1
-            ii = i + di
             jj = j + dj
             if ii >= 1 && ii <= n_x && jj >= 1 && jj <= n_y
                 @inbounds neighbour_cell_index_count[I] += 1
@@ -75,13 +57,67 @@ end
 )::Nothing where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, Dimension <: AbstractDimension}
     device_buildNeighbourSystem!(Backend, n_threads)(
         domain,
-        neighbour_cell_index_count,
-        neighbour_cell_index_list,
-        ndrange = (get_n(domain),),
+        neighbour_cell_index_count_,
+        neighbour_cell_index_list_,
+        ndrange = (Environment.get_n(domain),),
     )
-    synchronize(parallel)
+    Environment.synchronize(parallel)
     return nothing
 end
 
-include("CommonNeighbourSystem.jl")
-include("PeriodicNeighbourSystem.jl")
+@inline function host_buildNeighbourSystem!(
+    parallel::AbstractParallel{IT, FT, CT, Backend},
+    domain::AbstractDomain{IT, FT, Dimension},
+    neighbour_system::AbstractNeighbourSystem{IT, FT};
+    n_threads::Integer = kDefaultThreadNumber,
+)::Nothing where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, Dimension <: AbstractDimension}
+    host_buildNeighbourSystem!(
+        parallel,
+        domain,
+        neighbour_system.base_.neighbour_cell_index_count_,
+        neighbour_system.base_.neighbour_cell_index_list_;
+        n_threads = n_threads,
+    )
+    return nothing
+end
+
+struct CommonNeighbourSystem{IT <: Integer, FT <: AbstractFloat} <: AbstractNeighbourSystem{IT, FT}
+    base_::NeighbourSystemBase{IT}
+end
+
+@inline function CommonNeighbourSystem(
+    parallel::AbstractParallel{IT, FT, CT, Backend},
+    domain::AbstractDomain{IT, FT, Dimension};
+    max_neighbour_number::Integer = kDefaultMaxNeighbourNumber,
+    n_threads::Integer = kDefaultThreadNumber,
+)::CommonNeighbourSystem{
+    IT,
+    FT,
+} where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, N, Dimension <: AbstractDimension{N}}
+    base::NeighbourSystemBase{IT} = NeighbourSystemBase(parallel, domain; max_neighbour_number = max_neighbour_number)
+    neighbour_system = CommonNeighbourSystem{IT, FT}(base)
+    host_buildNeighbourSystem!(parallel, domain, neighbour_system; n_threads = n_threads)
+    return neighbour_system
+end
+
+struct PeriodicNeighbourSystem{IT <: Integer, FT <: AbstractFloat} <: AbstractNeighbourSystem{IT, FT}
+    base_::NeighbourSystemBase{IT}
+    neighbour_cell_relative_position_list_::AbstractArray{IT, 3} # (n_cells, n_neighbours, dimension)
+end
+
+@inline function PeriodicNeighbourSystem(
+    parallel::AbstractParallel{IT, FT, CT, Backend},
+    domain::AbstractDomain{IT, FT, Dimension};
+    max_neighbour_number::Integer = kDefaultMaxNeighbourNumber,
+    n_threads::Integer = kDefaultThreadNumber,
+)::PeriodicNeighbourSystem{
+    IT,
+    FT,
+    max_neighbour_cell_number,
+} where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend, N, Dimension <: AbstractDimension{N}}
+    base::NeighbourSystemBase{IT} = NeighbourSystemBase(parallel, domain; max_neighbour_number = max_neighbour_number)
+    neighbour_cell_relative_position_list = parallel(zeros(IT, Environment.get_n(domain), neighbourCellCount(N), N))
+    neighbour_system = PeriodicNeighbourSystem{IT, FT}(base, neighbour_cell_relative_position_list)
+    host_buildNeighbourSystem!(parallel, domain, neighbour_system; n_threads = n_threads)
+    return neighbour_system
+end

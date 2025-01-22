@@ -15,4 +15,6 @@ include("Parameter.jl")
 export AbstractParameter
 export AbstractParameter2D, AbstractParameter3D
 
+include("UserDefinedFieldTable.jl")
+
 end
