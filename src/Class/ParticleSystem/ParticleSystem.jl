@@ -7,4 +7,4 @@
   @ description:
  =#
 
-abstract type AbstractNeighbourSystem{IT <: Integer, FT <: AbstractFloat} end
+abstract type AbstractParticleSystem{IT <: Integer, FT <: AbstractFloat} end
