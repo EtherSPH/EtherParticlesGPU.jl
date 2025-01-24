@@ -26,8 +26,9 @@ module EtherParticlesGPU
 
 include("Environment/Environment.jl")
 using EtherParticlesGPU.Environment
-include("Components/Components.jl")
-using EtherParticlesGPU.Components
 include("Class/Class.jl")
+using EtherParticlesGPU.Class
+
+include("JuliaVista/JuliaVista.jl")
 
 end # module EtherParticlesGPU

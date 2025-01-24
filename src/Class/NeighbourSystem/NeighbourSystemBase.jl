@@ -26,9 +26,9 @@ end
     i::IT, j::IT = Environment.indexLinearToCartesian(domain, I)
     n_x::IT = Environment.get_n_x(domain)
     n_y::IT = Environment.get_n_y(domain)
-    for di in -1:1
+    for di::IT in -1:1
         ii::IT = i + di
-        for dj in -1:1
+        for dj::IT in -1:1
             jj::IT = j + dj
             if ii >= 1 && ii <= n_x && jj >= 1 && jj <= n_y
                 @inbounds neighbour_cell_index_count[I] += 1

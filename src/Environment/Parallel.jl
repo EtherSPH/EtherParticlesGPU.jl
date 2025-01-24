@@ -94,7 +94,15 @@ end
     x::NamedTuple,
 ) where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
     name_s = fieldnames(typeof(x))
-    value_s = parallel.(values(x))
+    value_s = values(x)
+    value_s_parallel = []
+    for item in value_s
+        if typeof(item) <: Real
+            push!(value_s_parallel, parallel(item))
+        else
+            push!(value_s_parallel, item)
+        end
+    end
     return NamedTuple{name_s}(value_s)
 end
 

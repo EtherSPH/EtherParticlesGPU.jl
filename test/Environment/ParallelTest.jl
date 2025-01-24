@@ -22,6 +22,13 @@
         @test parallel(1.0) ≈ 1.0f0
         @test parallel(Int32.(1:3)) == [1, 2, 3]
         @test parallel(Float64.(1:3)) ≈ [1.0f0, 2.0f0, 3.0f0]
+        @kwdef struct LinearTransferCPU
+            w::Int32 = 1
+            b::Float32 = 2.0f0
+        end
+        lt = LinearTransferCPU()
+        named_tuple = (a = 1, b = 2.0, lt = lt)
+        @test parallel(named_tuple) == (a = IT(1), b = FT(2.0), lt = lt)
         EtherParticlesGPU.synchronize(parallel)
         @test EtherParticlesGPU.toHost(parallel, [1, 2, 3]) == [1, 2, 3]
         @test EtherParticlesGPU.toHost(parallel, [1.0f0, 2.0f0, 3.0f0]) ≈ [1.0f0, 2.0f0, 3.0f0]
@@ -44,6 +51,13 @@
         @test parallel(1.0) ≈ 1.0f0
         @test parallel(Int32.(1:3)) |> Array == [1, 2, 3]
         @test parallel(Float64.(1:3)) |> Array ≈ [1.0f0, 2.0f0, 3.0f0]
+        @kwdef struct LinearTransferOneAPI
+            w::Int32 = 1
+            b::Float32 = 2.0f0
+        end
+        lt = LinearTransferOneAPI()
+        named_tuple = (a = 1, b = 2.0, lt = lt)
+        @test parallel(named_tuple) == (a = IT(1), b = FT(2.0), lt = lt)
         EtherParticlesGPU.synchronize(parallel)
         @test EtherParticlesGPU.toDevice(parallel, Int32.(1:3)) |> Array == [1, 2, 3]
         @test EtherParticlesGPU.toDevice(parallel, Float16.(1:3)) |> Array ≈ [1.0f0, 2.0f0, 3.0f0]

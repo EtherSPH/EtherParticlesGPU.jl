@@ -44,7 +44,7 @@ end
     return PeriodicBoundary{FT, NonePeriodicBoundaryPolicy}(neighbour_cell_relative_position_list)
 end
 
-# TODO: fix the neighbour_cell_relative_position_list in HavePeriodicBoundaryPolicy
+# TODO: complete the neighbour_cell_relative_position_list in HavePeriodicBoundaryPolicy
 @inline function PeriodicBoundary(
     parallel::AbstractParallel{IT, FT, CT, Backend},
     domain::AbstractDomain{IT, FT, Dimension},

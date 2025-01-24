@@ -1,0 +1,6 @@
+# requirements.txt
+
+# `PyCall` is required in such project
+
+numpy >= 2.2.2
+pyvista >= 0.44.1

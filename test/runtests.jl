@@ -13,6 +13,6 @@ using EtherParticlesGPU
 
 @testset "EtherParticlesGPU" begin
     include("Environment/EnvironmentTest.jl")
-    include("Components/ComponentsTest.jl")
+    # include("Components/ComponentsTest.jl")
     include("Class/ClassTest.jl")
 end

@@ -15,7 +15,7 @@
     for item in keys(x)
         push!(list, item)
     end
-    return list .|> Symbol
+    return Symbol.(list)
 end
 
 @inline function valuesVector(x::NamedTuple)

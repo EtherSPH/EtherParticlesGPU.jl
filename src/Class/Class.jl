@@ -17,5 +17,8 @@ const kDefaultMaxNeighbourNumber = 50
 
 include("NeighbourSystem/NeighbourSystem.jl")
 include("ParticleSystem/ParticleSystem.jl")
+export NamedIndex
+export get_index_named_tuple
+export get_int_n_capacity, get_float_n_capacity
 
 end
