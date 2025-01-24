@@ -25,6 +25,7 @@
         EtherParticlesGPU.synchronize(parallel)
         @test EtherParticlesGPU.toHost(parallel, [1, 2, 3]) == [1, 2, 3]
         @test EtherParticlesGPU.toHost(parallel, [1.0f0, 2.0f0, 3.0f0]) ≈ [1.0f0, 2.0f0, 3.0f0]
+        @test parallel((mass = 1, density = 1, velocity = 2)) == (mass = IT(1), density = IT(1), velocity = IT(2))
     end
     @testset "oneAPI" begin
         using Pkg
@@ -48,5 +49,6 @@
         @test EtherParticlesGPU.toDevice(parallel, Float16.(1:3)) |> Array ≈ [1.0f0, 2.0f0, 3.0f0]
         @test EtherParticlesGPU.toHost(parallel, CT([1, 2, 3])) == [1, 2, 3]
         @test EtherParticlesGPU.toHost(parallel, CT([1.0f0, 2.0f0, 3.0f0])) ≈ [1.0f0, 2.0f0, 3.0f0]
+        @test parallel((mass = 1, density = 1, velocity = 2)) == (mass = IT(1), density = IT(1), velocity = IT(2))
     end
 end

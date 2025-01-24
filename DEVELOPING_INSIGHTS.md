@@ -8,6 +8,9 @@ Complex data structures like `Dict`, `Tuple` should be avoided on GPU. Instead, 
 
 When it comes to GPU, the data structure should be as simple as possible. But the `Type` assertion can be passed to the GPU kernel to attain the same effect as complex data structures, just as what `template` does in `cpp`. An [experiment](validation/rule/struct_on_gpu/type_on_gpu.jl) is carried out to test such feasibility.
 
+- **CPU**: Complex data structures that allows dispatching
+- **GPU**: Simple data structures that can be passed to the kernel
+
 ## Performance & Easy-to-Code & Extensibility is an Impossible Trinity
 
 **Performance** needs quite fixed data structures and algorithms, which is quite opposite to the **easy-to-code** and **extensibility**. The more complex the data structure is, the more difficult it is to write and maintain the code. The more flexible the data structure is, the more difficult it is to optimize the code.

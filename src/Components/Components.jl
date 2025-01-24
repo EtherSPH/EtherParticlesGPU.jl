@@ -11,10 +11,11 @@ module Components
 
 using EtherParticlesGPU.Environment
 
-include("Parameter.jl")
-export AbstractParameter
-export AbstractParameter2D, AbstractParameter3D
-
-include("UserDefinedFieldTable.jl")
+# once I decide to parse a struct onto GPU
+# later I find it's more easy to parse a NamedTuple onto GPU
+include("NamedIndex/NamedIndex.jl")
+export NamedIndex
+export get_index_named_tuple
+export get_int_n_capacity, get_float_n_capacity
 
 end

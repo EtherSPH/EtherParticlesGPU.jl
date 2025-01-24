@@ -8,5 +8,5 @@
  =#
 
 @testset "Components" begin
-    include("ParameterTest.jl")
+    include("NamedIndexTest.jl")
 end

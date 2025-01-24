@@ -90,6 +90,14 @@ end
     end
 end
 
+@inline function (parallel::AbstractParallel{IT, FT, CT, Backend})(
+    x::NamedTuple,
+) where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
+    name_s = fieldnames(typeof(x))
+    value_s = parallel.(values(x))
+    return NamedTuple{name_s}(value_s)
+end
+
 @inline function synchronize(
     ::AbstractParallel{IT, FT, CT, Backend},
 )::Nothing where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}

@@ -7,4 +7,6 @@
   @ description:
  =#
 
+include("ParticleSystemBase.jl")
+
 abstract type AbstractParticleSystem{IT <: Integer, FT <: AbstractFloat} end
