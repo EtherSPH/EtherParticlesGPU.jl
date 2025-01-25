@@ -95,15 +95,14 @@ end
 ) where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
     name_s = fieldnames(typeof(x))
     value_s = values(x)
-    value_s_parallel = []
-    for item in value_s
+    converted_value_s = map(value_s) do item
         if typeof(item) <: Real
-            push!(value_s_parallel, parallel(item))
+            return parallel(item)
         else
-            push!(value_s_parallel, item)
+            return item
         end
     end
-    return NamedTuple{name_s}(value_s)
+    return NamedTuple{name_s}(converted_value_s)
 end
 
 @inline function synchronize(
