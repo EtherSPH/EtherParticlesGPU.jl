@@ -42,7 +42,7 @@
         parameters_named_tuple = (sound_speed = 340.0, gravity_x = 0.0, gravity_y = -9.8, gamma = 7)
         capacity_expaned(n)::typeof(n) = n + 100
         n_particles = 100
-        particle_system = EtherParticlesGPU.Class.ParticleSystem(
+        particle_system = EtherParticlesGPU.ParticleSystem(
             parallel,
             n_particles,
             int_named_tuple,
@@ -50,8 +50,8 @@
             parameters_named_tuple;
             capacityExpaned = capacity_expaned,
         )
-        @test EtherParticlesGPU.Class.get_n_particles(particle_system) == n_particles
-        @test EtherParticlesGPU.Class.get_n_capacity(particle_system) == capacity_expaned(n_particles)
+        @test EtherParticlesGPU.get_n_particles(particle_system) == n_particles
+        @test EtherParticlesGPU.get_n_capacity(particle_system) == capacity_expaned(n_particles)
         @test Array(particle_system.device_base_.n_particles_)[1] == n_particles
         @test length(Array(particle_system.device_base_.is_alive_)) == capacity_expaned(n_particles)
         @test sum(Array(particle_system.device_base_.is_alive_)) == n_particles

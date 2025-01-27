@@ -11,17 +11,6 @@
     IT = Int32
     dim = 2
     neighbour_count = 50
-    # naming rule:
-    # generallly rule: `prefix` + `name` + `suffix`
-    # without causing ambiguity, the name should be as short as possible to improve both readability and coding-efficiency.
-    # for example, `RVec` is better than `PositionVec`, `nRVec` is better than `neighbourRelativeVector`.
-    # `Mass` is more detailed than simply one character `M`, `Density` is more specific than simply `rho` as `Rho` may be confused with other physical quantities.
-    # 1. Usually, we use `CamelCase` to name a field.
-    # 2. prefix `n` means the field is a field related to neighbour.
-    # 3. prefix `d` means the field is a field related to derivative. for example, dDensity means ρ̇, dVelocityVec means v̇.
-    # 4. when `n` and `d` are both needed, we use `nD` as prefix. for example, nDW means ∇Ẇ.
-    # 5. suffix `Vec` means the field is a vector. for example, PositionVec means r, VelocityVec means v.
-    # 6. suffix `Mat` means the field is a matrix. for example, StrainMat means ε, StressMat means σ.
     int_named_tuple = (Tag = 1, nCount = 1, nIndex = 1 * neighbour_count)
     float_named_tuple = (
         RVec = dim,

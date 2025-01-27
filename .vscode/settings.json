@@ -18,6 +18,16 @@
             "description": "",
         }
     },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.stfolder": true,
+        "**/.stignore": true,
+    },
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#3399ff",
         "activityBar.background": "#3399ff",
@@ -38,4 +48,102 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#007fff",
+    "material-icon-theme.folders.customClones": [
+        {
+            "name": "note",
+            "base": "docs",
+            "color": "light-blue-200",
+            "lightColor": "light-blue-500",
+            "folderNames": [
+                "note",
+            ],
+            "rootFolderNames": [
+                "note"
+            ]
+        },
+        {
+            "name": "algorithm",
+            "base": "tools",
+            "color": "light-blue-500",
+            "lightColor": "light-blue-700",
+            "folderNames": [
+                "algorithm",
+            ],
+            "rootFolderNames": [
+                "algorithm"
+            ]
+        },
+        {
+            "name": "domain",
+            "base": "container",
+            "color": "blue-200",
+            "lightColor": "blue-500",
+            "folderNames": [
+                "domain",
+            ],
+            "rootFolderNames": [
+                "domain"
+            ]
+        },
+        {
+            "name": "particlesystem",
+            "base": "react-components",
+            "color": "blue-200",
+            "lightColor": "blue-900",
+            "folderNames": [
+                "particlesystem",
+            ],
+            "rootFolderNames": [
+                "particlesystem"
+            ]
+        },
+        {
+            "name": "neighboursystem",
+            "base": "connection",
+            "color": "orange-200",
+            "lightColor": "orange-700",
+            "folderNames": [
+                "neighboursystem",
+            ],
+            "rootFolderNames": [
+                "neighboursystem"
+            ]
+        },
+        {
+            "name": "neighboursearch",
+            "base": "connection",
+            "color": "orange-200",
+            "lightColor": "orange-700",
+            "folderNames": [
+                "neighboursearch",
+            ],
+            "rootFolderNames": [
+                "neighboursearch"
+            ]
+        },
+        {
+            "name": "apply",
+            "base": "react-components",
+            "color": "blue-200",
+            "lightColor": "blue-900",
+            "folderNames": [
+                "apply",
+            ],
+            "rootFolderNames": [
+                "apply"
+            ]
+        },
+        {
+            "name": "juliavista",
+            "base": "prisma",
+            "color": "purple-500",
+            "lightColor": "purple-700",
+            "folderNames": [
+                "juliavista",
+            ],
+            "rootFolderNames": [
+                "juliavista"
+            ]
+        }
+    ]
 }

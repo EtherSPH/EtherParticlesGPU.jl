@@ -11,20 +11,20 @@ abstract type AbstractParallel{IT <: Integer, FT <: AbstractFloat, CT <: Abstrac
 
 const kCPUBackend = CPU()
 
+struct Parallel{IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend} <:
+       AbstractParallel{IT, FT, CT, Backend} end
+
 function Base.show(
     io::IO,
-    ::AbstractParallel{IT, FT, CT, Backend},
+    ::Parallel{IT, FT, CT, Backend},
 ) where {IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend}
-    println(io, "AbstractParallel{IT, FT, CT, Backend}(")
+    println(io, "Parallel{IT, FT, CT, Backend}(")
     println(io, "    IT: ", IT)
     println(io, "    FT: ", FT)
     println(io, "    CT: ", CT)
     println(io, "    Backend: ", Backend)
     return println(io, ")")
 end
-
-struct Parallel{IT <: Integer, FT <: AbstractFloat, CT <: AbstractArray, Backend} <:
-       AbstractParallel{IT, FT, CT, Backend} end
 
 @inline function IntType(
     ::AbstractParallel{IT, FT, CT, Backend},

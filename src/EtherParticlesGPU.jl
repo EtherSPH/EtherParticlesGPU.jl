@@ -28,6 +28,9 @@ include("Environment/Environment.jl")
 using EtherParticlesGPU.Environment
 include("Class/Class.jl")
 using EtherParticlesGPU.Class
+include("Math/Math.jl")
+using EtherParticlesGPU.Math
+include("Algorithm/Algorithm.jl")
 
 include("JuliaVista/JuliaVista.jl")
 

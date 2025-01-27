@@ -1,18 +1,22 @@
 #=
   @ author: bcynuaa <bcynuaa@163.com>
-  @ date: 2025/01/15 00:40:10
+  @ date: 2025/01/26 17:04:11
   @ license: MIT
   @ language: Julia
   @ declaration: `EtherParticlesGPU.jl` is a particle based simulation framework avialable on multi-backend GPU.
   @ description:
  =#
 
-using Test
-using KernelAbstractions
-using EtherParticlesGPU
+module Algorithm
 
-@testset "EtherParticlesGPU" begin
-    include("Environment/EnvironmentTest.jl")
-    include("Class/ClassTest.jl")
-    include("Math/MathTest.jl")
+using KernelAbstractions
+using Atomix
+
+using EtherParticlesGPU.Environment
+using EtherParticlesGPU.Class
+
+const kDefaultThreadNumber = 256
+
+include("NeighbourSearch/NeighbourSearch.jl")
+
 end

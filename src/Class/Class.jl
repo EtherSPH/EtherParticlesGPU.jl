@@ -16,6 +16,17 @@ const kDefaultThreadNumber = 256
 const kDefaultMaxNeighbourNumber = 50
 
 include("NeighbourSystem/NeighbourSystem.jl")
+export AbstractNeighbourSystem
+export NeighbourSystem
+export clean!
+export AbstractPeriodicBoundaryPolicy
+export NonePeriodicBoundaryPolicy
+export PeriodicBoundaryPolicy2D, PeriodicBoundaryPolicy3D
+
 include("ParticleSystem/ParticleSystem.jl")
+export AbstractParticleSystem
+export ParticleSystem
+export get_n_particles, get_n_capacity
+export toDevice!, toHost!
 
 end

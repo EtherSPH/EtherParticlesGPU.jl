@@ -52,6 +52,16 @@ struct ParticleSystem{IT <: Integer, FT <: AbstractFloat} <: AbstractParticleSys
     device_named_tuple_::NamedTuple # a combination of named_index_ and parameters_named_tuple_
 end
 
+@inline function Base.show(io::IO, particle_system::ParticleSystem{IT, FT}) where {IT <: Integer, FT <: AbstractFloat}
+    print(io, "ParticleSystem{$IT, $FT}\n")
+    print(io, "  host: CPU()\n")
+    print(io, "  device: $(KernelAbstractions.get_backend(particle_system.device_base_.n_particles_))\n")
+    print(io, "  n particles: $(get_n_particles(particle_system))\n")
+    print(io, "  n capacity: $(get_n_capacity(particle_system))\n")
+    print(io, "  int properties: $(particle_system.named_index_.int_named_index_table_.name_symbol_table_head_)\n")
+    print(io, "  float properties: $(particle_system.named_index_.float_named_index_table_.name_symbol_table_head_)\n")
+end
+
 @inline function ParticleSystem(
     parallel::AbstractParallel{IT, FT, CT, Backend},
     n_particles::Integer,

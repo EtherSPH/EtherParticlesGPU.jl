@@ -70,8 +70,8 @@ end
     return Domain2D{IT, FT}(1, 0, 0, 1, 1)
 end
 
-function Base.show(io::IO, domain::AbstractDomain{IT, FT, Dimension2D}) where {IT <: Integer, FT <: AbstractFloat}
-    println(io, "AbstractDomain2D{$IT, $FT, Dimension2D}(")
+function Base.show(io::IO, domain::Domain2D{IT, FT}) where {IT <: Integer, FT <: AbstractFloat}
+    println(io, "Domain2D{$IT, $FT}(")
     println(io, "    gap: ", get_gap(domain))
     println(io, "    n_x: ", get_n_x(domain))
     println(io, "    n_y: ", get_n_y(domain))

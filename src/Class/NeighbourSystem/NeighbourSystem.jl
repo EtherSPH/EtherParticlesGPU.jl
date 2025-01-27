@@ -26,6 +26,12 @@ abstract type AbstractNeighbourSystem{
     PeriodicBoundaryPolicy <: AbstractPeriodicBoundaryPolicy,
 } end
 
+@inline function get_n_cells(
+    neighbour_system::AbstractNeighbourSystem{IT, FT, PeriodicBoundaryPolicy},
+)::IT where {IT <: Integer, FT <: AbstractFloat, PeriodicBoundaryPolicy <: AbstractPeriodicBoundaryPolicy}
+    return length(neighbour_system.base_.contained_particle_index_count_)
+end
+
 struct NeighbourSystem{IT <: Integer, FT <: AbstractFloat, PeriodicBoundaryPolicy <: AbstractPeriodicBoundaryPolicy} <:
        AbstractNeighbourSystem{IT, FT, PeriodicBoundaryPolicy}
     base_::NeighbourSystemBase{IT}
@@ -55,5 +61,17 @@ end
     neighbour_system::AbstractNeighbourSystem{IT, FT, PeriodicBoundaryPolicy},
 )::Nothing where {IT <: Integer, FT <: AbstractFloat, PeriodicBoundaryPolicy <: AbstractPeriodicBoundaryPolicy}
     KernelAbstractions.fill!(neighbour_system.base_.contained_particle_index_count_, IT(0))
+    return nothing
+end
+
+@inline function Base.show(
+    io::IO,
+    neighbour_system::AbstractNeighbourSystem{IT, FT, PeriodicBoundaryPolicy},
+)::Nothing where {IT <: Integer, FT <: AbstractFloat, PeriodicBoundaryPolicy <: AbstractPeriodicBoundaryPolicy}
+    print(io, "NeighbourSystem{$IT, $FT, $PeriodicBoundaryPolicy}\n")
+    print(io, "  cells: $(get_n_cells(neighbour_system))\n")
+    print(io, "  cell neighbours: $(size(neighbour_system.base_.neighbour_cell_index_list_, 2))\n")
+    print(io, "  active pair: $(neighbour_system.active_pair_.pair_vector_)\n")
+    print(io, "  periodic boundary policy: $PeriodicBoundaryPolicy\n")
     return nothing
 end
