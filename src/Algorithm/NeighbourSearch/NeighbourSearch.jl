@@ -16,19 +16,18 @@
     ns_contained_particle_index_list,
     index_position_vector::IT,
 ) where {IT <: Integer, FT <: AbstractFloat}
-    I::IT = KernelAbstractions.@index(Global)
+    I::IT = @index(Global)
     @inbounds if ps_is_alive[I] == 1
         @inbounds x::FT = ps_float_properties[I, index_position_vector]
         @inbounds y::FT = ps_float_properties[I, index_position_vector + 1]
         if Environment.inside(domain_2d, x, y)
-            # cell_index::IT = Environment.indexLinearFromPosition(domain_2d, x, y)
-            cell_index::IT = 1
+            cell_index::IT = Environment.indexLinearFromPosition(domain_2d, x, y)
             @inbounds ps_cell_index[I] = cell_index
-            particle_in_cell_index::IT = Atomix.@atomic ns_contained_particle_index_count[cell_index] += IT(1)
+            particle_in_cell_index::IT = Atomix.@atomic ns_contained_particle_index_count[cell_index] += 1
             @inbounds ns_contained_particle_index_list[cell_index, particle_in_cell_index] = I
         else
-            @inbounds ps_is_alive[I] = IT(0)
-            @inbounds ps_cell_index[I] = IT(0)
+            @inbounds ps_is_alive[I] = 0
+            @inbounds ps_cell_index[I] = 0
         end
     end
 end

@@ -22,7 +22,7 @@ end
     neighbour_cell_index_count,
     neighbour_cell_index_list,
 ) where {IT <: Integer, FT <: AbstractFloat}
-    I::IT = KernelAbstractions.@index(Global)
+    I::IT = @index(Global)
     i::IT, j::IT = Environment.indexLinearToCartesian(domain, I)
     n_x::IT = Environment.get_n_x(domain)
     n_y::IT = Environment.get_n_y(domain)
@@ -44,7 +44,7 @@ end
     neighbour_cell_index_count,
     neighbour_cell_index_list,
 ) where {IT <: Integer, FT <: AbstractFloat}
-    I::IT = KernelAbstractions.@index(Global)
+    I::IT = @index(Global)
     # TODO: add 3D support
 end
 
