@@ -16,5 +16,5 @@ end
 
 a = rand(Int32, 10) |> CT
 b = rand(Float32, 10) |> CT
-device_round(Backend, 10)(a, b, ndrange=(10, ))
+device_round(Backend, 10)(a, b, ndrange = (10,))
 KernelAbstractions.synchronize(Backend)

@@ -40,8 +40,8 @@ function Domain2D{IT, FT}(
     last_y = FT(last_y)
     span_x = last_x - first_x
     span_y = last_y - first_y
-    n_x = ceil(IT, span_x / gap)
-    n_y = ceil(IT, span_y / gap)
+    n_x = floor(IT, span_x / gap)
+    n_y = floor(IT, span_y / gap)
     n = n_x * n_y
     gap_x = span_x / n_x
     gap_y = span_y / n_y
@@ -120,10 +120,14 @@ end
     x::FT,
     y::FT,
 )::Tuple{IT, IT} where {IT <: Integer, FT <: AbstractFloat}
-    i = max(IT(1), ceil(IT, (x - get_first_x(domain)) * get_gap_x_inv(domain)))
-    i = min(get_n_x(domain), i)
-    j = max(IT(1), ceil(IT, (y - get_first_y(domain)) * get_gap_y_inv(domain)))
-    j = min(get_n_y(domain), j)
+    # why here is `unsafe_trunc`?
+    # see [link](https://github.com/JuliaGPU/oneAPI.jl/issues/441)
+    # this problem quite annoys me during the whole 2025 year's Spring Festival
+    # luckily, I found the solution in the issue
+    i::IT = min(get_n_x(domain), device_floor(IT, (x - get_first_x(domain)) * get_gap_x_inv(domain)) + 1)
+    i = max(IT(1), i)
+    j::IT = min(get_n_y(domain), device_floor(IT, (y - get_first_y(domain)) * get_gap_y_inv(domain)) + 1)
+    j = max(IT(1), j)
     return i, j
 end
 

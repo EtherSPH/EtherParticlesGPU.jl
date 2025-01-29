@@ -17,15 +17,7 @@
         CT = oneAPI.oneArray
         Backend = oneAPI.oneAPIBackend()
         parallel = EtherParticlesGPU.Parallel{IT, FT, CT, Backend}()
-        domain = EtherParticlesGPU.Domain2D{IT, FT}(0.15, 0.1, 0.2, 0.6, 0.6)
-        # 4 * 3 = 12 cells
-        # 4 | 6 | 4
-        # --|---|--
-        # 6 | 9 | 6
-        # --|---|--
-        # 6 | 9 | 6
-        # --|---|--
-        # 4 | 6 | 4
+        domain = EtherParticlesGPU.Domain2D{IT, FT}(0.15, 0.1, 0.2, 0.9, 0.9)
         periodic_boundary = EtherParticlesGPU.Class.PeriodicBoundary(
             parallel,
             domain,
@@ -37,6 +29,6 @@
             domain,
             EtherParticlesGPU.Class.PeriodicBoundaryPolicy2DAlongX,
         )
-        @test size(periodic_boundary.neighbour_cell_relative_position_list_) == (12, 9, 2)
+        @test size(periodic_boundary.neighbour_cell_relative_position_list_) == (20, 9, 2)
     end
 end

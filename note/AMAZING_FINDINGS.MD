@@ -9,3 +9,5 @@ I will go to the `oneAPI` forum to ask about this issue.
 Luckily, `CUDA.jl` overides the `round`-like function and provides the `round`-like function on GPU. This is a good news for me. I will use `CUDA.jl` as the backend for now.
 
 See [files](../validation/rule/round_function/round_function_on_gpu.jl) for more details.
+
+And after my hard-searching, I found that `unsafe_trunc` is available on GPU and was recommended by `oneAPI` team. See [link](https://github.com/JuliaGPU/oneAPI.jl/issues/441) for more details.

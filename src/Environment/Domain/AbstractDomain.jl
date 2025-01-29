@@ -9,6 +9,10 @@
 
 abstract type AbstractDomain{IT <: Integer, FT <: AbstractFloat, Dimension <: AbstractDimension} end
 
+@inline function device_floor(IT::Type{<:Integer}, x::FT)::IT where {FT <: AbstractFloat}
+    return unsafe_trunc(IT, floor(x))
+end
+
 @inline function dimension(
     ::AbstractDomain{IT, FT, Dimension},
 )::IT where {IT <: Integer, FT <: AbstractFloat, N, Dimension <: AbstractDimension{N}}
